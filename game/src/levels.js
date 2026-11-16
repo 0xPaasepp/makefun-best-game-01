@@ -1,0 +1,2 @@
+import {rng} from './random.js';
+export function level(n,seed=1){const r=rng(seed+n), walls=[{x:0,y:0,w:1280,h:24},{x:0,y:696,w:1280,h:24},{x:0,y:0,w:24,h:720},{x:1256,y:0,w:24,h:720}]; for(let i=0;i<n+3;i++)walls.push({x:180+i*170,y:120+(i%2)*270,w:100,h:28}); const shards=[];for(let i=0;i<Math.min(3+n,7);i++)shards.push({x:150+(i*150)%1000,y:100+((i*97)%500),got:false}); const hazards=[];for(let i=0;i<n+2;i++)hazards.push({x:260+i*180,y:300+(i%2)*120,r:18,type:i%2?'current':'mine'}); return {walls,shards,hazards,exit:{x:1160,y:600,w:70,h:70},seed:r()}}
