@@ -1,3 +1,0 @@
-export function makePlayer(){return{x:90,y:360,r:14,lives:3,invincible:0}}
-function blocked(x,y,r,walls){return walls.some(w=>x+r>w.x&&x-r<w.x+w.w&&y+r>w.y&&y-r<w.y+w.h)}
-export function move(p,keys,dt,lvl){p.invincible=Math.max(0,p.invincible-dt);let dx=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),dy=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0),l=Math.hypot(dx,dy)||1;let nx=p.x+dx/l*220*dt,ny=p.y+dy/l*220*dt;if(!blocked(nx,p.y,p.r,lvl.walls))p.x=nx;if(!blocked(p.x,ny,p.r,lvl.walls))p.y=ny;for(const h of lvl.hazards)if(!p.invincible&&Math.hypot(p.x-h.x,p.y-h.y)<h.r+p.r){p.lives--;p.x=90;p.y=360;p.invincible=2;return true}return false}
