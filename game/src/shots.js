@@ -1,4 +1,2 @@
-import {level} from './levels.js';
-export function shot(){return new URLSearchParams(location.search).get('shot')||''}
-// Frozen in-engine scenes keep screenshot captures reproducible.
-export function configureShot(g){if(!g.shot)return;g.s.rings=[{x:640,y:360,r:275,a:.25},{x:640,y:360,r:440,a:.12}];if(g.shot==='play'||g.shot==='gate'){g.mode='play';g.n=g.shot==='gate'?4:2;g.lvl=level(g.n);g.p.x=640;g.p.y=340;g.s.reveal=2;g.s.rings=[{x:640,y:340,r:240,a:.7},{x:640,y:340,r:120,a:.4}];g.score=1800;g.time=94;if(g.shot==='gate'){g.lvl.shards.forEach(q=>q.got=true);g.p.x=1040;g.p.y=590;g.notice='ALL SHARDS FOUND · ENTER THE GATE'}}if(g.shot==='end'){g.mode='win';g.n=5;g.lvl=level(5);g.lvl.shards.forEach(q=>q.got=true);g.total=29;g.score=12850;g.time=347}}
+export function burst(world,x,y,label,color='#7fffe1'){world.texts.push({x,y,label,color,life:1.8});for(let i=0;i<16;i++){const a=world.rand()*Math.PI*2;world.particles.push({x,y,vx:Math.cos(a)*100,vy:Math.sin(a)*100,life:0.7,color});}}
+export function updateEffects(w,dt){for(const p of w.particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;}for(const t of w.texts){t.y-=20*dt;t.life-=dt;}w.particles=w.particles.filter(p=>p.life>0);w.texts=w.texts.filter(t=>t.life>0);}

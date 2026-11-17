@@ -1,8 +1,3 @@
-// Keep held movement responsive and release it when the window loses focus.
-export function input(){
- const keys={};
- addEventListener('keydown',event=>{keys[event.key.length===1?event.key.toLowerCase():event.key]=true});
- addEventListener('keyup',event=>{keys[event.key.length===1?event.key.toLowerCase():event.key]=false});
- addEventListener('blur',()=>{for(const key of Object.keys(keys))keys[key]=false});
- return keys;
-}
+import {start,click,ability} from './world.js';
+export function bindInput(canvas,w){const keys=new Set();window.addEventListener('keydown',e=>{if(['Space','ArrowUp','ArrowDown'].includes(e.code))e.preventDefault();keys.add(e.code);if(e.repeat)return;if(e.code==='Enter'&&['title','loss','victory'].includes(w.mode))start(w);else if(e.code==='KeyP'&&['play','pause'].includes(w.mode))w.mode=w.mode==='play'?'pause':'play';else if(e.code==='Space')ability(w,0);else if(/^Digit[1-6]$/.test(e.code))ability(w,Number(e.code.slice(-1))-1);});window.addEventListener('keyup',e=>keys.delete(e.code));
+canvas.addEventListener('pointerdown',e=>{const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)*1280/r.width,y=(e.clientY-r.top)*720/r.height;if(x>1090&&y<60){w.sound=!w.sound;return;}if(w.mode==='title'||w.mode==='loss'||w.mode==='victory')start(w);else click(w,x,y);if(w.sound){try{const A=window.AudioContext||window.webkitAudioContext;const a=new A(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=350+w.next*65;g.gain.setValueAtTime(0.035,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.13);o.onended=()=>a.close();}catch{}}});window.addEventListener('blur',()=>{keys.clear();if(w.mode==='play')w.mode='pause';});return keys;}

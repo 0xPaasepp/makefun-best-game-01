@@ -1,1 +1,6 @@
-[{"name":"1-start.jpg","query":"?shot=start&seed=1"},{"name":"2-play.jpg","query":"?shot=play&seed=1"},{"name":"3-gate.jpg","query":"?shot=gate&seed=1"},{"name":"4-end.jpg","query":"?shot=end&seed=1"}]
+[
+ {"name":"1-title.jpg","state":"title"},
+ {"name":"2-play.jpg","state":"play"},
+ {"name":"3-victory.jpg","state":"victory"},
+ {"name":"4-game-over.jpg","state":"loss"}
+]
